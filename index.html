@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ESG Alliance Platform — Corporate ESG SaaS</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="loader" id="loader"><span></span><p>Загрузка ESG экосистемы...</p></div>
+  <div class="toast" id="toast">Данные обновлены</div>
+
+  <aside class="sidebar">
+    <a class="brand" href="#home" aria-label="ESG Alliance home">
+      <span class="brand-mark">EA</span><span><b>ESG Alliance</b><small>Enterprise SaaS</small></span>
+    </a>
+    <nav id="mainMenu"></nav>
+  </aside>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Kazakhstan ESG Digital Ecosystem</p>
+        <h1>Платформа устойчивого развития, IoT и AI аналитики</h1>
+      </div>
+      <div class="top-actions">
+        <input id="globalSearch" type="search" placeholder="Поиск компаний, датчиков, статей..." />
+        <button class="ghost" id="notifyBtn">Уведомления</button>
+        <button class="primary" data-modal="onboardingModal">Подключить компанию</button>
+      </div>
+    </header>
+
+    <section id="home" class="hero glass">
+      <div class="hero-copy">
+        <div class="breadcrumbs">Главная / ESG SaaS / Kazakhstan</div>
+        <h2>Корпоративная ESG платформа уровня Azure, Salesforce и EcoStruxure</h2>
+        <p>Единая цифровая среда для ESG рейтинга, SDG, IoT мониторинга, декарбонизации, образования, климатических проектов и управления устойчивым развитием.</p>
+        <div class="hero-actions"><a class="primary" href="#dashboard">Открыть Dashboard</a><a class="ghost" href="#academy">ESG Academy</a></div>
+      </div>
+      <div class="hero-card">
+        <canvas id="heroChart"></canvas>
+        <div class="score"><strong>AA</strong><span>ESG Rating</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="landingSections">
+      <div class="section-head"><p class="eyebrow">Landing Page</p><h2>Экосистема ESG Alliance</h2></div>
+      <div class="feature-grid" id="featuresGrid"></div>
+    </section>
+
+    <section class="section" id="counters"><div class="kpi-grid" id="counterGrid"></div></section>
+
+    <section id="dashboard" class="section glass">
+      <div class="section-head"><p class="eyebrow">Dashboard</p><h2>Executive ESG Cockpit</h2><button class="ghost" id="exportBtn">Экспорт отчета</button></div>
+      <div class="toolbar"><select id="regionFilter"><option>Все регионы</option><option>Алматы</option><option>Астана</option><option>Караганда</option></select><select id="industryFilter"><option>Все отрасли</option><option>Energy</option><option>Industry</option><option>Education</option></select><button class="primary" id="refreshBtn">Обновить</button></div>
+      <div class="kpi-grid" id="kpiGrid"></div>
+      <div class="charts-grid" id="chartsGrid"></div>
+    </section>
+
+    <section id="map" class="section">
+      <div class="section-head"><p class="eyebrow">Leaflet Maps</p><h2>Карта Казахстана и Алматы</h2></div>
+      <div class="map-layout"><div class="glass"><h3>Казахстан: регионы, предприятия, школы, датчики</h3><div id="kazakhstanMap" class="map"></div></div><div class="glass"><h3>Алматы: районы, воздух, деревья, экопункты</h3><div id="almatyMap" class="map"></div></div></div>
+    </section>
+
+    <section id="companies" class="section glass">
+      <div class="section-head"><p class="eyebrow">Companies</p><h2>Карточки предприятий</h2></div>
+      <div class="table-tools"><input id="companySearch" placeholder="Поиск предприятия"/><button class="ghost" data-modal="companyModal">Открыть карточку</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Компания</th><th>Регион</th><th>ESG</th><th>CO₂</th><th>Energy</th><th>Документы</th><th>Статус</th></tr></thead><tbody id="companyRows"></tbody></table></div>
+      <div class="pagination"><button>‹</button><span>1 / 8</span><button>›</button></div>
+    </section>
+
+    <section id="iot" class="section">
+      <div class="section-head"><p class="eyebrow">IoT</p><h2>Панель датчиков и промышленных протоколов</h2></div>
+      <div class="device-grid" id="deviceGrid"></div>
+      <div class="charts-grid"><div class="chart-card"><h3>История показаний</h3><canvas id="iotTrend"></canvas></div><div class="chart-card"><h3>Online / Offline</h3><canvas id="deviceStatus"></canvas></div></div>
+    </section>
+
+    <section id="rating" class="section glass"><div class="section-head"><p class="eyebrow">ESG Rating</p><h2>Национальный рейтинг</h2></div><div class="rating-grid" id="ratingGrid"></div></section>
+
+    <section id="improve" class="section">
+      <div class="section-head"><p class="eyebrow">AI Recommendations</p><h2>Повысить ESG рейтинг</h2></div>
+      <div class="initiative-grid" id="initiativeGrid"></div>
+    </section>
+
+    <section id="academy" class="section glass"><div class="section-head"><p class="eyebrow">ESG Academy</p><h2>Образовательная платформа</h2></div><div class="academy-grid" id="academyGrid"></div></section>
+
+    <section id="knowledge" class="section"><div class="section-head"><p class="eyebrow">Knowledge Center</p><h2>Библиотека знаний: 100 статей</h2></div><div class="article-grid" id="articleGrid"></div></section>
+
+    <section id="projects" class="section glass"><div class="section-head"><p class="eyebrow">Eco & Climate Projects</p><h2>Каталог проектов</h2></div><div class="project-grid" id="projectGrid"></div></section>
+
+    <section id="contacts" class="section contacts"><div><p class="eyebrow">FAQ / Partners / Reviews / Contacts</p><h2>Готовы подключить организацию?</h2><p>Партнеры: университеты, школы, города, экопартнеры, промышленные предприятия и климатические фонды.</p></div><button class="primary" data-modal="onboardingModal">Запустить мастер</button></section>
+  </main>
+
+  <div class="modal" id="onboardingModal"><div class="modal-card"><button class="close" data-close>×</button><h2>Мастер регистрации компании</h2><form id="onboardingForm" class="form-grid"></form><button class="primary" id="saveCompany" type="button">Сохранить в LocalStorage</button></div></div>
+  <div class="modal" id="companyModal"><div class="modal-card wide"><button class="close" data-close>×</button><div id="companyProfile"></div></div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
