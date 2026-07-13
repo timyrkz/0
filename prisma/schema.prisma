@@ -1,0 +1,14 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+enum RoleName { SUPER_ADMIN ADMIN DIRECTOR SDG_HEAD TEACHER LAB_ASSISTANT STUDENT PARENT PARTNER EXPERT GUEST }
+enum DocumentStatus { DRAFT REVIEW APPROVED ARCHIVED }
+
+model Tenant { id String @id @default(cuid()) name String slug String @unique users User[] documents Document[] projects Project[] createdAt DateTime @default(now()) }
+model User { id String @id @default(cuid()) email String @unique name String role RoleName tenantId String tenant Tenant @relation(fields:[tenantId], references:[id]) tasks Task[] auditLogs AuditLog[] createdAt DateTime @default(now()) }
+model Document { id String @id @default(cuid()) title String category String htmlContent String status DocumentStatus @default(DRAFT) version Int @default(1) tenantId String tenant Tenant @relation(fields:[tenantId], references:[id]) createdAt DateTime @default(now()) updatedAt DateTime @updatedAt }
+model Course { id String @id @default(cuid()) title String description String modules Json createdAt DateTime @default(now()) }
+model Lab { id String @id @default(cuid()) name String equipment Json bookings Json documents Json createdAt DateTime @default(now()) }
+model Project { id String @id @default(cuid()) title String goals Json kpi Json risks Json progress Int @default(0) tenantId String tenant Tenant @relation(fields:[tenantId], references:[id]) tasks Task[] createdAt DateTime @default(now()) }
+model Task { id String @id @default(cuid()) title String status String assigneeId String? assignee User? @relation(fields:[assigneeId], references:[id]) projectId String? project Project? @relation(fields:[projectId], references:[id]) dueDate DateTime? }
+model AuditLog { id String @id @default(cuid()) actorId String actor User @relation(fields:[actorId], references:[id]) action String entity String entityId String createdAt DateTime @default(now()) }
